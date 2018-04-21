@@ -26,32 +26,40 @@ public class depth_first_search_graph {
         adj[v].add(w);  // Add w to v's list.
     }
  
-    // A function used by DFS
-    void DFSUtil(int v,boolean visited[])
+    // A function used by BFS
+    void BFS(int s)
     {
-        // Mark the current node as visited and print it
-        visited[v] = true;
-        System.out.print(v+" ");
- 
-        // Recur for all the vertices adjacent to this vertex
-        Iterator<Integer> i = adj[v].listIterator();
-        while (i.hasNext())
-        {
-            int n = i.next();
-            if (!visited[n])
-                DFSUtil(n, visited);
-        }
-    }
- 
-    // The function to do DFS traversal. It uses recursive DFSUtil()
-    void DFS(int v)
-    {
-        // Mark all the vertices as not visited(set as
-        // false by default in java)
+        // Mark all the vertices as not visited(By default
+        // set as false)
         boolean visited[] = new boolean[V];
  
-        // Call the recursive helper function to print DFS traversal
-        DFSUtil(v, visited);
+        // Create a queue for BFS
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+ 
+        // Mark the current node as visited and enqueue it
+        visited[s]=true;
+        queue.add(s);
+ 
+        while (queue.size() != 0)
+        {
+            // Dequeue a vertex from queue and print it
+            s = queue.poll();
+            System.out.print(s+" ");
+ 
+            // Get all adjacent vertices of the dequeued vertex s
+            // If a adjacent has not been visited, then mark it
+            // visited and enqueue it
+            Iterator<Integer> i = adj[s].listIterator();
+            while (i.hasNext())
+            {
+                int n = i.next();
+                if (!visited[n])
+                {
+                    visited[n] = true;
+                    queue.add(n);
+                }
+            }
+        }
     }
 	
 	public static void main(String[] args) {
@@ -68,7 +76,7 @@ public class depth_first_search_graph {
         System.out.println("Following is Depth First Traversal "+
                            "(starting from vertex 2)");
  
-        g.DFS(2);
+        g.BFS(2);
 	}
 
 }
